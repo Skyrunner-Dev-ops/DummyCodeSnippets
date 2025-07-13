@@ -1,10 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Hello World</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>.NET Code Snippets</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        pre {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+        .hidden-snippet {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <h1>Hello, World!</h1>
-  <p>This is a simple HTML page hosted with GitHub Pages.</p>
+<div class="container my-5">
+    <h1 class="mb-4 text-center">.NET Code Snippets Reference</h1>
+
+    <!-- .NET Core Connection String -->
+    <h3>.NET Core 8 Connection String (appsettings.json)</h3>
+    <pre><code>"ConnectionStrings": {
+  "DefaultConnection": "Server=Surya;Database=Employee;Trusted_Connection=True;MultipleActiveResultSets=true"
+}</code></pre>
+
+    <!-- .NET Framework Connection String -->
+    <h3>.NET Framework Connection String (Web.config)</h3>
+    <pre><code>&lt;connectionStrings&gt;
+  &lt;add name="DefaultConnection"
+       connectionString="Server=SURYA;Database=SilverTouch;Integrated Security=True;"
+       providerName="System.Data.SqlClient" /&gt;
+&lt;/connectionStrings&gt;</code></pre>
+
+    <!-- Hidden Code Snippets -->
+    <div class="hidden-snippet">
+
+        <h3>Get Employee By ID using ADO.NET</h3>
+        <pre><code>try {
+    using (var connection = new SqlConnection(Constring)) {
+        var command = new SqlCommand("GetEmployeeById", connection);
+        command.CommandType = CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@Id", id);
+        SqlDataReader reader = command.ExecuteReader();
+        if (reader.HasRows) {
+            while (reader.Read()) {
+                emp.name = reader["name"].ToString();
+                emp.email = reader["email"].ToString();
+                emp.phone = reader["phone"].ToString();
+                emp.age = (int)reader["age"];
+            }
+        }
+    }
+}</code></pre>
+
+        <h3>Insert Employee using ADO.NET</h3>
+        <pre><code>using (var connection = new SqlConnection(Constring)) {
+    using (var command = new SqlCommand("AddEmployee", connection)) {
+        command.CommandType = CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@Name", employee.name);
+        command.Parameters.AddWithValue("@Email", employee.email);
+        command.Parameters.AddWithValue("@Phone", employee.phone);
+        command.Parameters.AddWithValue("@Age", employee.age);
+        command.ExecuteNonQuery();
+    }
+}</code></pre>
+
+        <h3>Register DbContext and Services (.NET Core)</h3>
+        <pre><code>builder.Services.AddDbContext&lt;AppDbContext&gt;(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped&lt;IEmployeeService, EmployeeService&gt;();</code></pre>
+
+        <h3>AppDbContext Class</h3>
+        <pre><code>public class AppDbContext : DbContext {
+    public AppDbContext(DbContextOptions&lt;AppDbContext&gt; options) : base(options) { }
+
+    public DbSet&lt;Employee&gt; Employees { get; set; }
+}</code></pre>
+
+        <h3>Getting Connection String from Web.config</h3>
+        <pre><code>string conStr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;</code></pre>
+
+        <h3>Getting Connection String from appsettings.json</h3>
+        <pre><code>var conStr = builder.Configuration.GetConnectionString("DefaultConnection");</code></pre>
+
+        <h3>Relationship Mapping: Invoice and Items</h3>
+        <pre><code>// Invoice Model
+public class Invoice {
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public ICollection&lt;Item&gt; Items { get; set; }
+}
+
+// Item Model
+public class Item {
+    public int Id { get; set; }
+    public string Description { get; set; }
+    public int InvoiceId { get; set; }
+    public Invoice Invoice { get; set; }
+}
+
+// In AppDbContext
+public DbSet&lt;Invoice&gt; Invoices { get; set; }
+public DbSet&lt;Item&gt; Items { get; set; }</code></pre>
+
+        <h3>Insert Invoice with Items using EF Core</h3>
+        <pre><code>var invoice = new Invoice {
+    Name = "Invoice 1",
+    Items = new List&lt;Item&gt; {
+        new Item { Description = "Item 1" },
+        new Item { Description = "Item 2" }
+    }
+};
+context.Invoices.Add(invoice);
+context.SaveChanges();</code></pre>
+
+    </div>
+</div>
 </body>
 </html>
