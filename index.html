@@ -12,7 +12,7 @@
             border-radius: 0.5rem;
             overflow-x: auto;
         }
-        .hidden-snippet {
+        .s-snippet {
             display: none;
         }
     </style>
@@ -35,8 +35,8 @@
        providerName="System.Data.SqlClient" /&gt;
 &lt;/connectionStrings&gt;</code></pre>
 
-    <!-- Hidden Code Snippets -->
-    <div class="hidden-snippet">
+   
+    <div class="s-snippet">
 
         <h3>Get Employee By ID using ADO.NET</h3>
         <pre><code>try {
@@ -130,6 +130,43 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 
 </code></pre>
+        <code><pre><div class="container mt-5">
+    <h2 class="mb-4">Employee Information</h2>
+    
+    <form id="employeeForm" class="row g-3">
+      <div class="col-md-4">
+        <label for="empName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="empName" required>
+      </div>
+      <div class="col-md-4">
+        <label for="empEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" id="empEmail" required>
+      </div>
+      <div class="col-md-4">
+        <label for="empPosition" class="form-label">Position</label>
+        <input type="text" class="form-control" id="empPosition" required>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary mt-3">Save</button>
+      </div>
+    </form>
+
+    <hr class="my-5">
+
+    <h4>Saved Employees</h4>
+    <table class="table table-bordered mt-3" id="employeeTable">
+      <thead class="table-light">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Position</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Employee rows will appear here -->
+      </tbody>
+    </table>
+  </div></pre></code>
     </div>
 </div>
 </body>
