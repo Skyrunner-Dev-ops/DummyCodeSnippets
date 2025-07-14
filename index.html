@@ -117,7 +117,19 @@ public DbSet&lt;Item&gt; Items { get; set; }</code></pre>
 };
 context.Invoices.Add(invoice);
 context.SaveChanges();</code></pre>
+<h3>Commands for code first  migration</h3>
+        <pre><code>dotnet ef migrations add InitialCreate <br>
+          dotnet ef database update
 
+</code></pre>
+
+      <h3>Required Nuget</h3>
+        <pre><code>dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+</code></pre>
     </div>
 </div>
 </body>
